@@ -21,12 +21,19 @@ export const login = (email, password) =>
       return data; // returns data received from the server
     });
 
+/**
+ * This function retrieves the profile data of an authenticated user.
+ *
+ * @param {string} token - The authorization token for the user.
+ *
+ * @returns {Promise} A Promise that resolves to the server's response as a JavaScript object.
+ */
 export const getData = (token) =>
   fetch(process.env.REACT_APP_BACKEND_API + 'user/profile', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + token, // provides authorization via a bearer token
     },
   })
     .then((response) => response.json())
