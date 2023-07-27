@@ -41,6 +41,16 @@ export const getData = (token) =>
       return data;
     });
 
+/**
+ * This function updates the profile data of an authenticated user.
+ *
+ * @param {string} firstName - The new first name of the user.
+ * @param {string} lastName - The new last name of the user.
+ * @param {string} token - The authorization token for the user.
+ *
+ * @returns {Promise} A Promise that resolves to the server's response.
+ */
+
 export const editProfile = (firstName, lastName, token) =>
   fetch(process.env.REACT_APP_BACKEND_API + 'user/profile', {
     method: 'PUT',
