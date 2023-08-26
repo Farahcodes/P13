@@ -31,9 +31,19 @@ export const loadState = () => {
   return {};
 };
 
-// Save state from a given storage
+/**
+ * Save application state to a given web storage.
+ *
+ * This function takes in the state and the storage (either `localStorage` or `sessionStorage`)
+ * as arguments, and attempts to save the state into the specified storage.
+ * If an error occurs (like exceeding storage quota), it simply catches and ignores the error.
+ *
+ * @param {Object} state - The state object to be stored.
+ * @param {Storage} storage - The storage object where the state will be saved (`localStorage` or `sessionStorage`).
+ */
 export const saveState = (state, storage) => {
   try {
+    // Stringify and store the state in the provided storage.
     storage.setItem('state', JSON.stringify(state));
   } catch (error) {}
 };
