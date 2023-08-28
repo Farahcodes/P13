@@ -7,7 +7,19 @@ const LOGIN_VALID = 'LOGIN_VALID', // Triggered when a user logs in successfully
   SAVE_STORAGE = 'SAVE_STORAGE', // Used to save some data related to the storage mechanism.
   PROFILE_UPDATE = 'PROFILE_UPDATE'; // Triggered when a user updates their profile.
 
-// Reducer
+/**
+ * User Reducer
+ *
+ * A reducer is a pure function that takes the current state and an action as arguments
+ * and returns a new state.
+ *
+ * This reducer handles state changes for user-related actions.
+ *
+ * @param {Object} state - The current state.
+ * @param {Object} action - The action being dispatched.
+ * @returns {Object} - The updated state.
+ */
+
 const userReducer = (state, action) => {
   switch (action.type) {
     case LOGIN_VALID:
