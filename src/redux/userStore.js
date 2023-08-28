@@ -55,5 +55,11 @@ const userReducer = (state, action) => {
   }
 };
 
-// Store
+/**
+ * User Store
+ *
+ * This is where the application's state related to the user is held. It's created using Redux's createStore method.
+ * The initial state is loaded from the 'loadState' function which retrieves
+ * the state from local or session storage, so the app can persist state across reloads.
+ */
 export const userStore = createStore(userReducer, loadState());
