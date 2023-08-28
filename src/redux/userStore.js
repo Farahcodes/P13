@@ -23,28 +23,34 @@ const LOGIN_VALID = 'LOGIN_VALID', // Triggered when a user logs in successfully
 const userReducer = (state, action) => {
   switch (action.type) {
     case LOGIN_VALID:
+      // When a user logs in, we update the state to reflect that they're logged in,
+      // store their user data and their token.
       return {
         logged: true,
         userData: action.userData,
         token: action.token,
       };
     case LOGOUT:
+      // When a user logs out, we reset the user state.
       return {};
     case SAVE_STORAGE:
+      // This case might be used to save some specifics about the user's storage preference or data.
       return {
-        ...state,
-        storage: action.storage,
+        ...state, // Spreading the existing state.
+        storage: action.storage, //Setting the new storage data.
       };
     case PROFILE_UPDATE:
+      // When a user updates their profile, only the firstName and lastName are updated in this case.
       return {
-        ...state,
+        ...state, // Spreading the existing state.
         userData: {
-          ...state.userData,
-          firstName: action.firstName,
-          lastName: action.lastName,
+          ...state.userData, // Spreading the existing user data.
+          firstName: action.firstName, // Updating the first name.
+          lastName: action.lastName, // Updating the last name.
         },
       };
     default:
+      // If the action type doesn't match any known action, return the state unchanged.
       return state;
   }
 };
