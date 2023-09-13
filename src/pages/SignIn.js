@@ -8,6 +8,7 @@ import { userStore } from '../redux/userStore'; // Importing the Redux store
 import { saveState } from '../redux/storage'; // Importing function to save state to Web Storage
 import { useState } from 'react'; // Importing useState hook for component-level state
 
+// SignIn Component
 export default function SignIn() {
   // Initialization
   const { register, handleSubmit } = useForm(), // Initializing react-hook-form
@@ -15,7 +16,16 @@ export default function SignIn() {
     navigate = useNavigate(), // Initializing navigate function for routing
     [errorMessage, setErrorMessage] = useState(''); // Local state for managing error messages
 
+  /**
+   * onSubmit function
+   *
+   * This function is called when the form is submitted.
+   * It performs login and state operations and navigates the user based on login success or failure.
+   *
+   * @param {Object} data - The form data
+   */
   const onSubmit = async (data) => {
+    // Determine the Web Storage type to use based on the "Remember me" checkbox
     const storageName = data['remember-me']
         ? 'localStorage'
         : 'sessionStorage',
@@ -24,25 +34,30 @@ export default function SignIn() {
         : sessionStorage;
     const saveCurrentState = () =>
       saveState(userStore.getState(), storageType);
-
+    // Attempt to login
     try {
       const loginData = await login(data.username, data.password);
-
+      // If login successful
       if (loginData.status === 200) {
+        // Fetch user data
         const userData = await getData(loginData.body.token);
-
+        // Dispatching Redux actions
         dispatch({
           type: 'LOGIN_VALID',
           userData: userData.body,
           token: loginData.body.token,
         });
         dispatch({ type: 'SAVE_STORAGE', storage: storageName });
+        // Save the current state to Web Storage
         saveCurrentState();
+        // Navigate to profile page
         navigate('/profile');
       } else {
+        // If login failed, set the error message
         setErrorMessage(loginData.message);
       }
     } catch (error) {
+      // If there's a server error
       setErrorMessage('Error with server');
     }
   };
