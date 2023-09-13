@@ -9,10 +9,11 @@ import { saveState } from '../redux/storage'; // Importing function to save stat
 import { useState } from 'react'; // Importing useState hook for component-level state
 
 export default function SignIn() {
-  const { register, handleSubmit } = useForm(),
-    dispatch = useDispatch(),
-    navigate = useNavigate(),
-    [errorMessage, setErrorMessage] = useState('');
+  // Initialization
+  const { register, handleSubmit } = useForm(), // Initializing react-hook-form
+    dispatch = useDispatch(), // Initializing useDispatch for action dispatching
+    navigate = useNavigate(), // Initializing navigate function for routing
+    [errorMessage, setErrorMessage] = useState(''); // Local state for managing error messages
 
   const onSubmit = async (data) => {
     const storageName = data['remember-me']
