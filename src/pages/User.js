@@ -7,6 +7,7 @@ import { saveState } from '../redux/storage'; // Import function to save state t
 import ErrorPage from './ErrorPage'; // Importing ErrorPage component for unauthorized users
 import { useState } from 'react'; // React's useState hook for component state
 
+// HeaderMessage Function Component
 const HeaderMessage = (props) => {
   return (
     <>
@@ -15,6 +16,7 @@ const HeaderMessage = (props) => {
         <br />
         {props.username}
       </h1>
+
       <button
         className="edit-button"
         onClick={() => props.openEdit()}
@@ -25,12 +27,14 @@ const HeaderMessage = (props) => {
   );
 };
 
+// EditingHeader Function Component
 const EditingHeader = (props) => {
-  const { register, handleSubmit } = useForm(),
-    dispatch = useDispatch(),
+  const { register, handleSubmit } = useForm(), // Initialize useForm for form validation.
+    dispatch = useDispatch(), // Initialize Redux dispatch for state updates.
+    // Function to save the current state to either sessionStorage or localStorage.
     saveCurrentState = () =>
       saveState(userStore.getState(), props.storage),
-    [errorMessage, setErrorMessage] = useState('');
+    [errorMessage, setErrorMessage] = useState(''); // Local state for error messages.
 
   const onSubmit = async (data) => {
     try {
