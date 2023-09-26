@@ -1,11 +1,12 @@
 import './User.scss'; // Importing styling for this component
 import { useForm } from 'react-hook-form'; // Importing useForm for form validation
-import { editProfile } from '../api/login'; // Importing API calls
+import { useState } from 'react'; // React's useState hook for component state
 import { useSelector, useDispatch } from 'react-redux'; // Redux hooks for state and actions
+
+import { editProfile } from '../api/login'; // Importing API calls
 import { userStore } from '../redux/userStore'; // Importing Redux store
 import { saveState } from '../redux/storage'; // Import function to save state to Web Storage
 import ErrorPage from './ErrorPage'; // Importing ErrorPage component for unauthorized users
-import { useState } from 'react'; // React's useState hook for component state
 
 // HeaderMessage Function Component
 const HeaderMessage = (props) => {
@@ -36,27 +37,34 @@ const EditingHeader = (props) => {
       saveState(userStore.getState(), props.storage),
     [errorMessage, setErrorMessage] = useState(''); // Local state for error messages.
 
+  /**
+   * onSubmit function for form submission.
+   * Makes an API call and updates the global and local state.
+   */
   const onSubmit = async (data) => {
     try {
       const edit = await editProfile(
         data.firstName,
         data.lastName,
         props.token
-      );
+      ); // API call to edit the user profile.
       if (edit.status === 200) {
+        // Successful API call.
         dispatch({
           type: 'PROFILE_UPDATE',
           firstName: data.firstName,
           lastName: data.lastName,
-        });
-        props.closeEdit();
-        setErrorMessage('');
-        saveCurrentState();
+        }); // Update Redux state.
+        props.closeEdit(); // Close editing mode.
+        setErrorMessage(''); // Clear any existing error messages.
+        saveCurrentState(); // Save the updated state to Web Storage.
       } else {
-        setErrorMessage(edit.message);
+        // Unsuccessful API call.
+        setErrorMessage(edit.message); // Show API error message.
       }
     } catch (error) {
-      setErrorMessage('Error with server');
+      // Catch network or server errors.
+      setErrorMessage('Error with server'); // Show server error message
     }
   };
 
